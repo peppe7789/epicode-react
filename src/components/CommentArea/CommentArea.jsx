@@ -1,36 +1,78 @@
 import { useState, useEffect } from "react"
+import { Form } from "react-bootstrap"
 import { APIKEY } from "../../costants/APIKEY"
+import { Button } from "react-bootstrap"
 
 
 
 
 
-const CommentArea = ({asin}) => {
-    const ENDEPOITGETCOMMENT = `https://striveschool-api.herokuapp.com/api/books/${asin}/comments/`
-    const [comments, setComments] = useState([])
-    console.log(comments);
+const CommentArea = ({ asin }) => {
 
-    const getComment = async () => {
+const endPointPost = "https://striveschool-api.herokuapp.com/api/comments/"
+
+
+    const [formState, setFormState] = useState({})
+    console.log(formState);
+    // prendiamo tutti i valori di input del form creando un oggetto
+    const handleInputChange = (e) => {
+        const parseRate = e.target.name=== "rate" ? Number(e.target.value) : e.target.value
+        setFormState({
+            ...formState,
+            elementId: asin,
+            [e.target.name]: parseRate
+        })
+    }
+
+    const onSubmit = async (e) => {
+        e.preventDefault()
         try {
-            const response = await fetch(ENDEPOITGETCOMMENT, {
+            const response = await fetch(endPointPost , {
+                method: "POST",
                 headers: {
-                    "Authorization": `Bearer ${APIKEY}`,
+                    "Authorization": `Bearer ${APIKEY}`, 
                     "Content-Type": "application/json",
-                }
+                },
+                body : JSON.stringify(formState)
             })
-            const data = await response.json()
-            setComments(data)
+            return await response.json()
+            
         } catch (error) {
             console.log(error);
         }
-    }
-
-    useEffect(() => {
-        getComment()
-    },[asin])
+        
+}
 
     return (
-        <div>ciao commenta</div>
+        <Form
+            className="d-flex flex-column gap-2"
+        onSubmit={onSubmit}
+        >
+            <Form.Label>Inserisci Rate</Form.Label>
+            <Form.Control
+                type="number"
+                min={1}
+                max={5}
+                required={true}
+                name="rate"
+                onChange={handleInputChange}
+            />
+            <Form.Label>Inserisci Commento</Form.Label>
+            <Form.Control
+                type="text"
+                required={true}
+                name="comment"
+                onChange={handleInputChange}
+            />
+
+            <Button
+                
+                type="submit"
+                variant="success"
+            >
+                Invia commento
+            </Button>
+        </Form>
     )
 }
 
