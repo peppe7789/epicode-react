@@ -2,18 +2,23 @@ import { useState } from 'react';
 import { Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import CommentArea from '../../CommentArea/commentArea';
 
 
-const BookCard = ({ img, title, price, category }) => {
+const BookCard = ({ img, title, price, category, asin }) => {
 
 
-   const [isSelected, setIsSelected] = useState(false)
+    const [isSelected, setIsSelected] = useState(false)
+
+    const [showCommentArea, setShowCommentArea] = useState(false)
+
+    const toggleShowCommentArea = () => setShowCommentArea(!showCommentArea)
 
     const toggleIsSelect = () => {
-    setIsSelected(!isSelected)
-}
+        setIsSelected(!isSelected)
+    }
 
-const selectedCardStyle = isSelected ? "border-5 border-danger" : ""
+    const selectedCardStyle = isSelected ? "border-5 border-danger" : ""
 
 
     return (
@@ -32,6 +37,17 @@ const selectedCardStyle = isSelected ? "border-5 border-danger" : ""
                     <Card.Text>{category}</Card.Text>
                     <Card.Text>{price}</Card.Text>
                     <Button variant="danger">Acquista</Button>
+                    <Button
+                        onClick={toggleShowCommentArea}
+                        variant="success"
+                    >
+                        Aggiungi commento
+                    </Button>
+                    {showCommentArea && (
+                        <CommentArea
+                        asin={asin}
+                        />
+                    )}
                 </Card.Body>
             </Card>
         </Col>
