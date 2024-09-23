@@ -12,9 +12,7 @@ const SingleBook = ({ img, title }) => {
         >
             <Card >
                 <Card.Img variant="top" src={img} />
-                <Card.Body>
-                    <Card.Title>{title}</Card.Title>
-                </Card.Body>
+                <Card.Title>{title}</Card.Title>
             </Card>
         </Col>
     )
