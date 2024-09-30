@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Col, Row, Form } from "react-bootstrap"
+import { AllTheBooksContext } from "../../../contexts/AllTheBooksContext";
 
 
 
-const SearchBook = ({ books, setBooks, allBooks }) => {
+const SearchBook = () => {
 
-    console.log(books);
+   const {books, setBooks, allBooks} = useContext(AllTheBooksContext)
     // stati
+    
     const [inputValue, setInputValue] = useState("")
-
+    
 
     // hendler
     // funzione per catturare il valore dell'input
@@ -32,8 +34,11 @@ const SearchBook = ({ books, setBooks, allBooks }) => {
 
 
     return (
-        <Row className="py-4">
-            <Col className="d-flex align-items-center gap-2">
+        // <Row className="py-4">
+        <Col
+            sm
+            md={3}
+            className="d-flex align-items-center gap-2">
                 <Form.Control
                     type="text"
                     placeholder="Cerca libro"
@@ -47,7 +52,7 @@ const SearchBook = ({ books, setBooks, allBooks }) => {
                     Cerca
                 </button>
             </Col>
-        </Row>
+        // </Row>
     )
 }
 

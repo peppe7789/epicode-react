@@ -1,28 +1,18 @@
 import { Container, Row } from "react-bootstrap"
-import fantasy from "../../costants/books/fantasy.json"
+
 import BookCard from "./BookCard/BookCard"
-import { useState } from "react"
+
 import SearchBook from "./SearchBook/Searchbook"
+import { useContext } from "react"
+import { AllTheBooksContext } from "../../contexts/AllTheBooksContext"
 
 
 const AllTheBooks = () => {
 
-    // Stati iniziali 
-
-    const [books, setBooks] = useState(fantasy)
-    // stato fisso per avere disponibili tutti i libri
-    const [allBooks] = useState(fantasy)
-   
-
-
-  
+    const {books} = useContext(AllTheBooksContext)
     return (
         <Container>
-            <SearchBook
-                books={books}
-                setBooks={setBooks}
-                allBooks={allBooks}
-            />
+            
             <Row className="gy-4 d-flex gx">
                 {books &&
                     books.map((book, idx) => (
