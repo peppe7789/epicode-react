@@ -1,8 +1,9 @@
 import { ListGroup, ListGroupItem, Modal } from "react-bootstrap"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { APIKEY } from "../../costants/APIKEY"
 import CommentArea from "../CommentArea/commentArea"
 import Button from 'react-bootstrap/Button';                                                                                                                                  
+import { CommentAreaContext } from "../../contexts/CommenrtAreaContext";
 
 
 
@@ -11,7 +12,10 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
     
     const ENDEPOITGETCOMMENT = `https://striveschool-api.herokuapp.com/api/books/${asin}/comments/`
     const ENDPOINTDELETEPUTCOMMENT = `https://striveschool-api.herokuapp.com/api/comments/`
-    const [comments, setComments] = useState([])
+
+    const {comments, setComments} = useContext(CommentAreaContext)
+    
+
     const getComment = async () => {
         try {
             const response = await fetch(ENDEPOITGETCOMMENT, {
@@ -104,7 +108,9 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
                                 </div>
                             </div>
                             <div className="d-flex flex-column gap-2">
-                                <button className="btn btn-warning">
+                                <button
+                                    onClick={()=>putComment(comment._id)}
+                                    className="btn btn-warning">
                                     Modifica
                                 </button>
                                 <button

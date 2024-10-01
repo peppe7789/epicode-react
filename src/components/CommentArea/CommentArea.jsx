@@ -1,7 +1,8 @@
-import { useState} from "react"
+import { useContext, useState} from "react"
 import { Form } from "react-bootstrap"
 import { APIKEY } from "../../costants/APIKEY"
 import { Button } from "react-bootstrap"
+import { CommentAreaContext } from "../../contexts/CommenrtAreaContext"
 
 
 
@@ -11,8 +12,8 @@ const CommentArea = ({ asin }) => {
 
 const endPointPost = "https://striveschool-api.herokuapp.com/api/comments/"
 
-
-    const [formState, setFormState] = useState({})
+const{formState, setFormState}= useContext(CommentAreaContext)
+    
     console.log(formState);
     // prendiamo tutti i valori di input del form creando un oggetto
     const handleInputChange = (e) => {
