@@ -13,7 +13,7 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
     const ENDEPOITGETCOMMENT = `https://striveschool-api.herokuapp.com/api/books/${asin}/comments/`
     const ENDPOINTDELETEPUTCOMMENT = `https://striveschool-api.herokuapp.com/api/comments/`
 
-    const {comments, setComments} = useContext(CommentAreaContext)
+    const {formState, setFormState,comments, setComments} = useContext(CommentAreaContext)
     
 
     const getComment = async () => {
@@ -62,7 +62,7 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
                     "Authorization": `Bearer ${APIKEY}`,
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify()
+                body: JSON.stringify(setComments)
             })
             const result = await response.json()
         } catch (error) {
