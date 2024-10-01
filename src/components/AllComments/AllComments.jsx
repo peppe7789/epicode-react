@@ -7,7 +7,10 @@ import Button from 'react-bootstrap/Button';
 
 
 const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
+    
+    
     const ENDEPOITGETCOMMENT = `https://striveschool-api.herokuapp.com/api/books/${asin}/comments/`
+    const ENDPOINTDELETEPUTCOMMENT = `https://striveschool-api.herokuapp.com/api/comments/`
     const [comments, setComments] = useState([])
     const getComment = async () => {
         try {
@@ -32,6 +35,25 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
     const closeModal = () => {
         setIsCommentVisible(false)
     }
+
+    const deleteComment = async (elementId) => {
+        try {
+            return await fetch(ENDPOINTDELETEPUTCOMMENT + elementId, {
+                method: 'DELETE',
+                headers: {
+                    "Authorization": `Bearer ${APIKEY}`,
+                    "Content-Type": "application/json",
+                }
+            })
+        } catch (error) {
+            
+        }
+    }
+    
+
+
+
+
     return (
         <Modal
             show={isCommentsVisible}
@@ -55,14 +77,25 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
                     >
                         <ListGroup.Item
                             key={`comment-${index}`}
+                            className="d-flex justify-content-between"
                         >
                             <div className="d-flex flex-column gap-1">
                                 
-                                <div>{comment.author}</div>
+                                <div>Autore:  {comment.author}</div>
                                 <div>
-                                    <div>{comment.comment}</div>
-                                    <div>{comment.rate}</div>
+                                    <div>Commento:  {comment.comment}</div>
+                                    <div>Voto:  {comment.rate}</div>
                                 </div>
+                            </div>
+                            <div className="d-flex flex-column gap-2">
+                                <button className="btn btn-warning">
+                                    Modifica
+                                </button>
+                                <button
+                                    onClick={()=>deleteComment(comment._id)}
+                                    className="btn btn-danger">
+                                    Cancella
+                                </button>
                             </div>
                         </ListGroup.Item>
                     </ListGroup>
