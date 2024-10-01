@@ -49,6 +49,22 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
             
         }
     }
+
+    const putComment = async (elementId) => {
+        try {
+            const response = await fetch(ENDPOINTDELETEPUTCOMMENT + elementId, {
+                method: 'PUT',
+                headers: {
+                    "Authorization": `Bearer ${APIKEY}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify()
+            })
+            const result = await response.json()
+        } catch (error) {
+            console.log(error);
+        }
+    }
     
 
 
