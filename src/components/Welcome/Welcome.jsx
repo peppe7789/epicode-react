@@ -1,8 +1,13 @@
 import { Col, Container, Row } from "react-bootstrap"
 import WelcomeImg from "../../assets/foto-welcome.jpg"
+import { useContext } from "react"
+import { ThemeContext } from "../../contexts/ThemeContext"
 
 
 const Welcome = () => {
+
+    const { isDarkMode} = useContext(ThemeContext)
+
     return (
         <Container>
             <Row className="d-flex justify-content-center align-items-center p-4 gap-4">
@@ -13,7 +18,10 @@ const Welcome = () => {
                     <h1 className="text-danger">
                         Welcom in my Sites
                     </h1>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae, tenetur!
+                    <p
+                    className={`${isDarkMode ? 'text-white' 
+                    : 'text-black' }`}
+                    >Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vitae, tenetur!
                     </p>
                 </Col>
             </Row>

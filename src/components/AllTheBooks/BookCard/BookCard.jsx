@@ -35,7 +35,8 @@ const BookCard = ({ img, title, price, category, asin }) => {
 
     return (
         <>
-            <Col sx md={3}>
+            <Col sx md={3}
+            >
                 <Card className={`h-100 ${selectedCardStyle}`}
                     onClick={toggleIsSelect}
                 >

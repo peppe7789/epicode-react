@@ -17,7 +17,7 @@ const SearchBook = () => {
     const onChangeSearchInput = (e) => {
         setInputValue(e.target.value)
     }
-    console.log(inputValue);
+
 
     // funzione per filtrare i valori
     const filtredBooks = () => {

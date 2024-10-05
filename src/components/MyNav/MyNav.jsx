@@ -3,6 +3,9 @@ import NavbarLinks from './NavbarLinks/NavbarLinks';
 import SearchBook from '../AllTheBooks/SearchBook/Searchbook';
 import NavLogo from './NavLogo/NavLogo';
 import { Col, Row } from "react-bootstrap";
+import { useContext } from 'react';
+import { ThemeContext } from '../../contexts/ThemeContext';
+
 
 
 
@@ -10,15 +13,23 @@ import { Col, Row } from "react-bootstrap";
 const MyNav = () => {
 
 
+    const { isDarkMode, toggleDarkMode } = useContext(ThemeContext)
+
 
 
     return (
         <nav>
             <Row >
-                <Col className=" p-3 d-flex justify-content-between align-items-center bg-danger mx-2 ">
+                <Col className={` p-3 d-flex justify-content-between align-items-centerr mx-2 ${isDarkMode ? 'bg-dark' : 'bg-danger' }`} >
                     <NavLogo />
                     <NavbarLinks />
                     <SearchBook />
+                    <button
+                        onClick={toggleDarkMode}
+                        className='btn btn-dark rounded-2'
+                    >
+                        DarkMode
+                    </button>
                 </Col>
             </Row>
         </nav>
