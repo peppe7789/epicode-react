@@ -4,7 +4,7 @@ import { APIKEY } from "../../costants/APIKEY"
 import CommentArea from "../CommentArea/commentArea"
 import Button from 'react-bootstrap/Button';                                                                                                                                  
 import { CommentAreaContext } from "../../contexts/CommenrtAreaContext";
-
+import { v4 as uuidv4 } from 'uuid';
 
 
 const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
@@ -13,7 +13,7 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
     const ENDEPOITGETCOMMENT = `https://striveschool-api.herokuapp.com/api/books/${asin}/comments/`
     const ENDPOINTDELETEPUTCOMMENT = `https://striveschool-api.herokuapp.com/api/comments/`
 
-    const {formState, setFormState,comments, setComments} = useContext(CommentAreaContext)
+    const {comments, setComments} = useContext(CommentAreaContext)
     
 
     const getComment = async () => {
@@ -96,7 +96,7 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
                         variant="flush"
                     >
                         <ListGroup.Item
-                            key={`comment-${index}`}
+                            key={uuidv4()}
                             className="d-flex justify-content-between"
                         >
                             <div className="d-flex flex-column gap-1">

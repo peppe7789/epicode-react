@@ -4,10 +4,14 @@ import { createContext,useState } from "react";
 
 export const CommentAreaContext = createContext()
 
-export const CommenAreaContextProvider = ({ children }) => {
+export const CommenAreaContextProvider = ({ children , asin}) => {
 
     const [formState, setFormState] = useState({})
     const [comments, setComments] = useState([])
+    
+
+    
+
 
     return (
 

@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import CommentArea from '../../CommentArea/commentArea';
 import AllComments from '../../AllComments/AllComments';
+import { useNavigate } from 'react-router-dom';
 
 
 const BookCard = ({ img, title, price, category, asin }) => {
@@ -27,6 +28,10 @@ const BookCard = ({ img, title, price, category, asin }) => {
 
     const selectedCardStyle = isSelected ? "border-5 border-danger" : ""
 
+    const handleRedirectDetails = () => {
+        useNavigate(`/book-details/${asin}`)
+    }
+
 
     return (
         <>
@@ -45,13 +50,17 @@ const BookCard = ({ img, title, price, category, asin }) => {
                         <Card.Text>{category}</Card.Text>
                         <Card.Text>{price}</Card.Text>
                         <div
-                        className=' d-sm-flex flex-sm-column gap-sm-2'
+                            className=' d-sm-flex flex-sm-column gap-sm-2'
                         >
-                            <Button variant="danger">Acquista</Button>
+                            <Button
+                                onClick={handleRedirectDetails}
+                                variant="info"
+                            >Dettagli
+                            </Button>
                             <Button
                                 onClick={openCommentModal}
                                 variant="success"
-
+                                asin={asin}
                             >
                                 Commenti
                             </Button>

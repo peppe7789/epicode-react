@@ -1,13 +1,11 @@
-import { useState } from 'react'
+
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { MyNav } from './components/MyNav/MyNav';
-import Welcome from './components/Welcome/Welcome';
-import AllTheBooks from './components/AllTheBooks/AllTheBooks';
-import MyFooter from './components/MyFooter/MyFooter';
-import SingleBook from './components/AllTheBooks/SingleBook/SingleBook';
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import NotFoundPage from './pages/NotFoundPage';
+import BookDetails from './pages/BookDetails';
 
 
 
@@ -15,14 +13,17 @@ const App = () => {
 
 
   return (
-    <>
-      <MyNav />
-      <Welcome />
-      <AllTheBooks />
-      <MyFooter />
-      <SingleBook />
 
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route exact path='/' element={<HomePage />} />
+        <Route path='/book-details/:bookId' element={<BookDetails />} />
+        
+        
+        
+        <Route path='*' element={<NotFoundPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

@@ -14,7 +14,7 @@ const endPointPost = "https://striveschool-api.herokuapp.com/api/comments/"
 
 const{formState, setFormState}= useContext(CommentAreaContext)
     
-    console.log(formState);
+   
     // prendiamo tutti i valori di input del form creando un oggetto
     const handleInputChange = (e) => {
         const parseRate = e.target.name=== "rate" ? Number(e.target.value) : e.target.value
