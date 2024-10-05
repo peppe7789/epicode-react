@@ -1,4 +1,4 @@
-import { Row } from "react-bootstrap"
+import { Row,Col} from "react-bootstrap"
 import { ClockLoader } from "react-spinners"
 
 const LoadingSpinner = () => {

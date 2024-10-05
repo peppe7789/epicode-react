@@ -1,4 +1,4 @@
-import { useContext, useState} from "react"
+import { useContext} from "react"
 import { Form } from "react-bootstrap"
 import { APIKEY } from "../../costants/APIKEY"
 import { Button } from "react-bootstrap"
@@ -28,6 +28,7 @@ const{formState, setFormState}= useContext(CommentAreaContext)
     const onSubmit = async (e) => {
         e.preventDefault()
         try {
+            
             const response = await fetch(endPointPost , {
                 method: "POST",
                 headers: {

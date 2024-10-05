@@ -1,22 +1,29 @@
-import { ListGroup, ListGroupItem, Modal } from "react-bootstrap"
-import { useState, useEffect, useContext } from "react"
+import { Alert, ListGroup, Modal } from "react-bootstrap"
+import { useEffect, useContext, useState } from "react"
 import { APIKEY } from "../../costants/APIKEY"
 import CommentArea from "../CommentArea/commentArea"
-import Button from 'react-bootstrap/Button';                                                                                                                                  
+import Button from 'react-bootstrap/Button';
 import { CommentAreaContext } from "../../contexts/CommenrtAreaContext";
 import { v4 as uuidv4 } from 'uuid';
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+
+
 
 
 const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
     
-    
+    const [isCommentError, setIsCommentError] = useState("")
+    const [isCommentLoading, setIsCommentLoading] = useState(false)
+
+
     const ENDEPOITGETCOMMENT = `https://striveschool-api.herokuapp.com/api/books/${asin}/comments/`
     const ENDPOINTDELETEPUTCOMMENT = `https://striveschool-api.herokuapp.com/api/comments/`
 
-    const {comments, setComments} = useContext(CommentAreaContext)
-    
+    const { comments, setComments } = useContext(CommentAreaContext)
+
 
     const getComment = async () => {
+        setIsCommentLoading(true)
         try {
             const response = await fetch(ENDEPOITGETCOMMENT, {
                 headers: {
@@ -26,8 +33,13 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
             })
             const data = await response.json()
             setComments(data)
+            setIsCommentLoading(false)
         } catch (error) {
+            setIsCommentError(error.message)
             console.log(error);
+        }
+        finally {
+            setIsCommentLoading(false)
         }
     }
 
@@ -41,6 +53,7 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
     }
 
     const deleteComment = async (elementId) => {
+        setIsCommentLoading(true)
         try {
             return await fetch(ENDPOINTDELETEPUTCOMMENT + elementId, {
                 method: 'DELETE',
@@ -49,12 +62,17 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
                     "Content-Type": "application/json",
                 }
             })
+            setIsCommentLoading(false)
         } catch (error) {
-            
+            setIsCommentError(error.message)
+        }
+        finally {
+            setIsCommentLoading(false)
         }
     }
 
     const putComment = async (elementId) => {
+        setIsCommentLoading(true)
         try {
             const response = await fetch(ENDPOINTDELETEPUTCOMMENT + elementId, {
                 method: 'PUT',
@@ -65,11 +83,17 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
                 body: JSON.stringify(setComments)
             })
             const result = await response.json()
+            setIsCommentLoading(false)
         } catch (error) {
-            console.log(error);
+            setIsCommentError(error.message)
+        }
+        finally {
+            setIsCommentLoading(false)
         }
     }
-    
+
+
+
 
 
 
@@ -86,42 +110,51 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <CommentArea
-                    asin={asin}
-                    
-                />
-
-                {comments && comments.map((comment, index) => (
-                    <ListGroup
-                        variant="flush"
-                    >
-                        <ListGroup.Item
-                            key={uuidv4()}
-                            className="d-flex justify-content-between"
+                {isCommentLoading && !isCommentError &&
+                    (
+                        <LoadingSpinner
+                        />
+                    )}
+                {!isCommentLoading && isCommentError &&
+                    (
+                        <Alert variant="danger">
+                            Oops, non sono riuscito a caricare i commenti...
+                        </Alert>
+                    )}
+                {!isCommentLoading && !isCommentError &&
+                    comments.map(comment => (
+                        <ListGroup
+                            variant="flush"
                         >
-                            <div className="d-flex flex-column gap-1">
-                                
-                                <div>Autore:  {comment.author}</div>
-                                <div>
-                                    <div>Commento:  {comment.comment}</div>
-                                    <div>Voto:  {comment.rate}</div>
+                            <ListGroup.Item
+                                key={uuidv4()}
+                                className="d-flex justify-content-between"
+                            >
+                                <div className="d-flex flex-column gap-1">
+
+                                    <div>Autore:  {comment.author}</div>
+                                    <div>
+                                        <div>Commento:  {comment.comment}</div>
+                                        <div>Voto:  {comment.rate}</div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="d-flex flex-column gap-2">
-                                <button
-                                    onClick={()=>putComment(comment._id)}
-                                    className="btn btn-warning">
-                                    Modifica
-                                </button>
-                                <button
-                                    onClick={()=>deleteComment(comment._id)}
-                                    className="btn btn-danger">
-                                    Cancella
-                                </button>
-                            </div>
-                        </ListGroup.Item>
-                    </ListGroup>
-                ))}
+                                <div className="d-flex flex-column gap-2">
+                                    <button
+                                        onClick={() => putComment(comment._id)}
+                                        className="btn btn-warning">
+                                        Modifica
+                                    </button>
+                                    <button
+                                        onClick={() => deleteComment(comment._id)}
+                                        className="btn btn-danger">
+                                        Cancella
+                                    </button>
+                                </div>
+                            </ListGroup.Item>
+                        </ListGroup>
+                    ))}
+                <CommentArea asin={asin} />
+
                 {comments.length <= 0 && (
                     <ListGroup.Item>
                         Non ci sono commenti per questo libro

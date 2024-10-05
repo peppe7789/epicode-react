@@ -14,8 +14,7 @@ const HomePage = () => {
 
     return (
         <div
-            className={`${isDarkMode ? 'bg-dark' 
-    : 'bg-light' }`}
+            className={`${isDarkMode ? 'bg-dark' : 'bg-light' }`}
         >
             <NavbarAndFooter>
                 <Welcome />
