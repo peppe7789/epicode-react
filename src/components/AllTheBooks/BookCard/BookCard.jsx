@@ -27,9 +27,11 @@ const BookCard = ({ img, title, price, category, asin }) => {
     }
 
     const selectedCardStyle = isSelected ? "border-5 border-danger" : ""
+    const navigate = useNavigate()
+
 
     const handleRedirectDetails = () => {
-        useNavigate(`/book-details/${asin}`)
+        navigate(`/book-details/${asin}`)
     }
 
 

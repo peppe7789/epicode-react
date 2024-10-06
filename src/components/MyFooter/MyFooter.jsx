@@ -8,10 +8,10 @@ import NavbarLinks from "../MyNav/NavbarLinks/NavbarLinks";
 const MyFooter = () => {
     return (
         <footer className="bg-black text-white p-5 mt-3">
-            <Container >
+            <Container fluid>
                 <Row className=" d-flex justify-content-center align-items-center flex-column gap-3">
                     <Col
-                        className="d-flex justify-content-center"
+                        className="d-flex justify-content-center flex-column align-items-center"
                         sm={12} md={6}
                     >
                         {/* icon footer */}
@@ -22,10 +22,11 @@ const MyFooter = () => {
                             <SlSocialLinkedin />
                             <SlSocialPintarest />
                         </div>
-                    </Col>
-                    <Col>
                         <NavbarLinks />
                     </Col>
+                    
+                        
+                    
                 </Row>
             </Container>
         </footer>

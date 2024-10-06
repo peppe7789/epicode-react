@@ -2,13 +2,15 @@ import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { AllTheBooksContext } from "../contexts/AllTheBooksContext";
 import NavbarAndFooter from "../components/NavbarAndFooter/NavbarAndFooter";
+import { Container, Row, Col } from "react-bootstrap";
+import SingleBook from "../components/AllTheBooks/SingleBook/SingleBook";
 
 
 
 
 const BookDetails = () => {
     const { books } = useContext(AllTheBooksContext)
-    
+
     const { bookId } = useParams()
 
 
@@ -24,10 +26,22 @@ const BookDetails = () => {
 
     return (
         <NavbarAndFooter>
-            <h1>{selectedBook.title}</h1>
-            <img src={selectedBook.img} alt="" />
-            <p>{selectedBook.category}</p>
-            <p>{selectedBook.price}</p>
+            <Container>
+                <Row>
+                    <SingleBook
+                        img={selectedBook.img}
+                        title={selectedBook.title}
+                        category={selectedBook.category}
+                        price={selectedBook.price}
+                    />
+                    
+                </Row>
+            </Container>
+
+
+
+
+
         </NavbarAndFooter>
 
 
