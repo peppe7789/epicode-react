@@ -1,10 +1,19 @@
+import { useContext } from 'react';
 import { Col } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
+
 import Card from 'react-bootstrap/Card';
+import { AllTheBooksContext } from '../../../contexts/AllTheBooksContext';
 
 
 
 const SingleBook = ({ img, title, price, category }) => {
+
+
+    const { books } = useContext(AllTheBooksContext)
+    
+    
+
+
     return (
         <Col
         

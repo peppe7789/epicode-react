@@ -1,9 +1,6 @@
 import React, { useContext } from "react";
-
 import Welcome from '../components/Welcome/Welcome';
 import AllTheBooks from '../components/AllTheBooks/AllTheBooks';
-
-import SingleBook from '../components/AllTheBooks/SingleBook/SingleBook';
 import NavbarAndFooter from "../components/NavbarAndFooter/NavbarAndFooter";
 import { ThemeContext } from "../contexts/ThemeContext";
 
@@ -19,7 +16,7 @@ const HomePage = () => {
             <NavbarAndFooter>
                 <Welcome />
                 <AllTheBooks />
-                <SingleBook />
+                
             </NavbarAndFooter>
 
 

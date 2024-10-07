@@ -12,7 +12,7 @@ const AllTheBooks = () => {
             
             <Row className="gy-4 d-flex gx">
                 {books &&
-                    books.map((book, idx) => (
+                    books.slice(0,20).map((book, idx) => (
                         <BookCard
                             key={`book-${idx}`}
                             title={book.title}

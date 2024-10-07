@@ -7,7 +7,7 @@ import NavbarLinks from "../MyNav/NavbarLinks/NavbarLinks";
 
 const MyFooter = () => {
     return (
-        <footer className="bg-black text-white p-5 mt-3">
+        <footer className="bg-dark text-white p-5 mt-3">
             <Container fluid>
                 <Row className=" d-flex justify-content-center align-items-center flex-column gap-3">
                     <Col

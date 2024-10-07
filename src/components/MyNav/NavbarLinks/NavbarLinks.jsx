@@ -1,6 +1,6 @@
 
 import { navData } from "../../../costants/navdata";
-
+import { v4 as uuidv4 } from 'uuid';
 
 
 const NavbarLinks = () => {
@@ -8,9 +8,11 @@ const NavbarLinks = () => {
     return (
         
             
-                <ul className="d-flex gap-4 align-items-center style-link list-unstyled m-0 ">
+                <ul className="d-flex gap-4 align-items-center style-link list-unstyled m-0 d-md-none">
                     {navData.map((data) => (
-                        <li>
+                        <li
+                        key={uuidv4()}
+                        >
                             <a className="text-decoration-none text-white" href={data.href}>
                                 
                                 {data.text}

@@ -6,7 +6,7 @@ const LoadingSpinner = () => {
 
     return (
         <Row>
-            <Col>
+            <Col className="d-flex justify-content-center align-content-center">
                 <ClockLoader
                     color="red"
                     loading

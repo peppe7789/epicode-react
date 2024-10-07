@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import CommentArea from '../../CommentArea/commentArea';
+import CommentArea from '../../CommentArea/CommentArea';
 import AllComments from '../../AllComments/AllComments';
 import { useNavigate } from 'react-router-dom';
 
@@ -53,7 +53,7 @@ const BookCard = ({ img, title, price, category, asin }) => {
                         <Card.Text>{category}</Card.Text>
                         <Card.Text>{price}</Card.Text>
                         <div
-                            className=' d-sm-flex flex-sm-column gap-sm-2'
+                            className=' d-sm-flex flex-sm-column gap-sm-2 '
                         >
                             <Button
                                 onClick={handleRedirectDetails}

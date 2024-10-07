@@ -1,26 +1,26 @@
 import { Alert, ListGroup, Modal } from "react-bootstrap"
-import { useEffect, useContext, useState } from "react"
-import { APIKEY } from "../../costants/APIKEY"
-import CommentArea from "../CommentArea/commentArea"
+import {useContext,useEffect} from "react"
+import CommentArea from "../CommentArea/CommentArea";
 import Button from 'react-bootstrap/Button';
 import { CommentAreaContext } from "../../contexts/CommenrtAreaContext";
 import { v4 as uuidv4 } from 'uuid';
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-
+import { APIKEY } from "../../costants/APIKEY";
 
 
 
 const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
     
-    const [isCommentError, setIsCommentError] = useState("")
-    const [isCommentLoading, setIsCommentLoading] = useState(false)
-
-
+   
     const ENDEPOITGETCOMMENT = `https://striveschool-api.herokuapp.com/api/books/${asin}/comments/`
+
+    console.log(ENDEPOITGETCOMMENT);
     const ENDPOINTDELETEPUTCOMMENT = `https://striveschool-api.herokuapp.com/api/comments/`
 
-    const { comments, setComments } = useContext(CommentAreaContext)
-
+    const { comments, setComments,isCommentError, setIsCommentError,isCommentLoading, setIsCommentLoading,render,setRender, toggleRender, setFormState,formState} = useContext(CommentAreaContext)
+    
+    
+        
 
     const getComment = async () => {
         setIsCommentLoading(true)
@@ -39,18 +39,12 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
             console.log(error);
         }
         finally {
+            
             setIsCommentLoading(false)
         }
     }
 
-    useEffect(() => {
-        getComment()
-    }, [asin])
-
-
-    const closeModal = () => {
-        setIsCommentVisible(false)
-    }
+    
 
     const deleteComment = async (elementId) => {
         setIsCommentLoading(true)
@@ -68,10 +62,14 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
         }
         finally {
             setIsCommentLoading(false)
+            toggleRender()
         }
     }
 
+   
+
     const putComment = async (elementId) => {
+        
         setIsCommentLoading(true)
         try {
             const response = await fetch(ENDPOINTDELETEPUTCOMMENT + elementId, {
@@ -80,9 +78,10 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
                     "Authorization": `Bearer ${APIKEY}`,
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(setComments)
+                body: JSON.stringify(formState)
             })
             const result = await response.json()
+            setFormState(result)
             setIsCommentLoading(false)
         } catch (error) {
             setIsCommentError(error.message)
@@ -91,6 +90,27 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
             setIsCommentLoading(false)
         }
     }
+   
+
+    
+    useEffect(() => {
+        getComment()
+    }, [asin,render])
+
+    const closeModal = () => {
+        setIsCommentVisible(false)
+    }
+
+   
+    const handleEditButton = (comment) => {
+        setFormState({
+            rate: comment.rate,
+            comment: comment.comment,
+            elementId: comment.asin,
+            id: comment._id,
+    })
+}
+   
 
 
 
@@ -122,12 +142,14 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
                         </Alert>
                     )}
                 {!isCommentLoading && !isCommentError &&
-                    comments.map(comment => (
+                    comments.map((comment) => (
                         <ListGroup
                             variant="flush"
+                            
                         >
                             <ListGroup.Item
                                 key={uuidv4()}
+                                
                                 className="d-flex justify-content-between"
                             >
                                 <div className="d-flex flex-column gap-1">
@@ -140,7 +162,7 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
                                 </div>
                                 <div className="d-flex flex-column gap-2">
                                     <button
-                                        onClick={() => putComment(comment._id)}
+                                        onClick={()=> handleEditButton(comment)}
                                         className="btn btn-warning">
                                         Modifica
                                     </button>
@@ -153,7 +175,10 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
                             </ListGroup.Item>
                         </ListGroup>
                     ))}
-                <CommentArea asin={asin} />
+                <CommentArea
+                    asin={asin}
+                    
+                />
 
                 {comments.length <= 0 && (
                     <ListGroup.Item>
