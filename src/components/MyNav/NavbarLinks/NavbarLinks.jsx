@@ -8,7 +8,7 @@ const NavbarLinks = () => {
     return (
         
             
-                <ul className="d-flex gap-4 align-items-center style-link list-unstyled m-0 d-md-none">
+                <ul role="list" className="d-flex gap-4 align-items-center style-link list-unstyled m-0 d-md-none">
                     {navData.map((data) => (
                         <li
                         key={uuidv4()}

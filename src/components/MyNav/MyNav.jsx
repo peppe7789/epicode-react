@@ -21,16 +21,17 @@ const MyNav = () => {
             <Container fluid>
                 <Row >
                     <Col className={` p-3 d-flex justify-content-between align-items-centerr ${isDarkMode ? 'bg-dark' : 'bg-danger'}`} >
-                        <div className='d-flex justify-content-center align-items-center gap-3'>
+                        <div title='groupLogoLink' className='d-flex justify-content-center align-items-center gap-3'>
                             <NavLogo />
                             <NavbarLinks />
                         </div>
                         
 
                        
-                        <div className='d-flex justify-content-center align-items-center gap-2'>
+                        <div title='groupSearchDark' className='d-flex justify-content-center align-items-center gap-2'>
                             <SearchBook />
                             <button
+                            
                                 onClick={toggleDarkMode}
                                 className='btn btn-dark rounded-2'
                             >

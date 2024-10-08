@@ -45,7 +45,9 @@ const BookCard = ({ img, title, price, category, asin }) => {
                     <Card.Img
                         variant="top"
                         className="h-100 w-100 object-fit-cover rounded-3"
-                        src={img} />
+                        src={img}
+                        role='img'
+                    />
                     <Card.Body>
                         <Card.Title className="text-truncate">
                             {title}

@@ -14,12 +14,12 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
    
     const ENDEPOITGETCOMMENT = `https://striveschool-api.herokuapp.com/api/books/${asin}/comments/`
 
-    console.log(ENDEPOITGETCOMMENT);
+    
     const ENDPOINTDELETEPUTCOMMENT = `https://striveschool-api.herokuapp.com/api/comments/`
 
     const { comments, setComments,isCommentError, setIsCommentError,isCommentLoading, setIsCommentLoading,render,setRender, toggleRender, setFormState,formState} = useContext(CommentAreaContext)
     
-    
+    console.log(formState);
         
 
     const getComment = async () => {
@@ -105,13 +105,14 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
     const handleEditButton = (comment) => {
         setFormState({
             rate: comment.rate,
+            author: comment.author,
             comment: comment.comment,
-            elementId: comment.asin,
+        
             id: comment._id,
     })
 }
    
-
+console.log(handleEditButton);
 
 
 
