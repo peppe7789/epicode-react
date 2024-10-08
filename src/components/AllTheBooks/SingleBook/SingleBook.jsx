@@ -22,7 +22,7 @@ const SingleBook = ({ img, title, price, category }) => {
             className='mt-3'
         >
             <Card >
-                <Card.Img variant="top" src={img} />
+                <Card.Img role='img' variant="top" src={img} />
                 <Card.Title>{title}</Card.Title>
                 <Card.Text>{category}</Card.Text>
                 <Card.Text>{price}</Card.Text>
