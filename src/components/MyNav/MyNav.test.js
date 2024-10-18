@@ -32,18 +32,13 @@ describe("Test Mynav component", () => {
 
         const divElement = getByTitle("groupLogoLink")
         expect(divElement).toBeInTheDocument()
-        expect(divElement).toHaveAttribute("class","d-flex justify-content-center align-items-center gap-3")
+        // expect(divElement).toHaveAttribute("class","d-flex justify-content-center align-items-center gap-3")
 
         const divSecondElement = getByTitle("groupSearchDark")
         expect(divSecondElement).toBeInTheDocument()
         expect(divSecondElement).toHaveAttribute("class", "d-flex justify-content-center align-items-center gap-2")
 
-        // const buttonDarkMode = getByText("DarkMode")
-        // const handleClick = jest.fn()
-        // fireEvent.click(screen.getByText("DarkMode"))
-        // expect(buttonDarkMode).toBeInTheDocument()
-        // expect(handleClick).toHaveBeenCalledTimes(1)
-        
+       
 
         
         

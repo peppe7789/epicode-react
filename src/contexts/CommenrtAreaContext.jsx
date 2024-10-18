@@ -8,20 +8,20 @@ export const CommentAreaContext = createContext()
 export const CommenAreaContextProvider = ({ children, asin }) => {
 
     const [formState, setFormState] = useState([
-        {rate: "",
-        author: "",
-        comment: "",
-        id: asin,
-        }
+
     ])
     const [comments, setComments] = useState([])
     const [isCommentError, setIsCommentError] = useState("")
     const [isCommentLoading, setIsCommentLoading] = useState(false)
     const [render, setRender] = useState(false)
+    const [isEditButton, setIsEditButton] = useState(false)
+
 
     const toggleRender = () => setRender(!render)
 
-
+    const onChangeEdit = (value) => {
+        setIsEditButton(value)
+    }
 
 
 
@@ -29,7 +29,7 @@ export const CommenAreaContextProvider = ({ children, asin }) => {
     return (
 
         <CommentAreaContext.Provider
-            value={{ formState, setFormState, comments, setComments, isCommentError, setIsCommentError, isCommentLoading, setIsCommentLoading, render, setRender, toggleRender }}
+            value={{ formState, setFormState, comments, setComments, isCommentError, setIsCommentError, isCommentLoading, setIsCommentLoading, render, setRender, toggleRender, isEditButton, setIsEditButton,onChangeEdit }}
         >
             {children}
         </CommentAreaContext.Provider>

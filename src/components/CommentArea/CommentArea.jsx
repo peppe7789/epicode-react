@@ -1,4 +1,4 @@
-import { useContext, useEffect} from "react"
+import { useContext, useEffect } from "react"
 import { Form } from "react-bootstrap"
 import { APIKEY } from "../../costants/APIKEY"
 import { Button } from "react-bootstrap"
@@ -9,17 +9,17 @@ import { ThemeContext } from "../../contexts/ThemeContext"
 
 
 
-const CommentArea = ({ asin }) => {
+const CommentArea = ({ asin, putComment, elementId }) => {
 
-const endPointPost = "https://striveschool-api.herokuapp.com/api/comments/"
+    const endPointPost = "https://striveschool-api.herokuapp.com/api/comments/"
 
-    const { formState,setFormState,setIsCommentError, setIsCommentLoading,toggleRender,render } = useContext(CommentAreaContext)
-    const {isDarkMode} = useContext(ThemeContext)
-    
-   
+    const { formState, setFormState, setIsCommentError, setIsCommentLoading, toggleRender, render, isEditButton} = useContext(CommentAreaContext)
+    const { isDarkMode } = useContext(ThemeContext)
+
+
     // prendiamo tutti i valori di input del form creando un oggetto
     const handleInputChange = (e) => {
-        const parseRate = e.target.name=== "rate" ? Number(e.target.value) : e.target.value
+        const parseRate = e.target.name === "rate" ? Number(e.target.value) : e.target.value
         setFormState({
             ...formState,
             elementId: asin,
@@ -29,43 +29,47 @@ const endPointPost = "https://striveschool-api.herokuapp.com/api/comments/"
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        setIsCommentLoading(true)
-        try {
-            
-            const response = await fetch(endPointPost , {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${APIKEY}`, 
-                    "Content-Type": "application/json",
-                },
-                body : JSON.stringify(formState)
-            })
-            setIsCommentLoading(false)
-            return await response.json()
-            
-        } catch (error) {
-            setIsCommentError(true)
-        }
-        finally {
-            setIsCommentLoading(false)
-            toggleRender()
-        }
+        if (!isEditButton) {
+            setIsCommentLoading(true)
+            try {
 
-        useEffect(() => {
-            getComment()
-        }, [render])
-        
-}
+                const response = await fetch(endPointPost, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${APIKEY}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formState)
+                })
+                setIsCommentLoading(false)
+                return await response.json()
+
+            } catch (error) {
+                setIsCommentError(true)
+            }
+            finally {
+                setIsCommentLoading(false)
+                toggleRender()
+            }
+        } else {
+            await putComment(elementId)
+        }
+    }
+
+    
 
     return (
         <Form
             className="d-flex flex-column gap-2 mt-2"
+
             onSubmit={onSubmit}
-           
+
+
+
         >
             <Form.Label
-            className={`${isDarkMode ? 'text-white' 
-            : 'text-black' }`}
+                className={`${isDarkMode ? 'text-white'
+                    : 'text-black'}`}
             >Inserisci Rate</Form.Label>
             <Form.Control
                 type="number"
@@ -78,8 +82,8 @@ const endPointPost = "https://striveschool-api.herokuapp.com/api/comments/"
 
             />
             <Form.Label
-             className={`${isDarkMode ? 'text-white' 
-             : 'text-black' }`}
+                className={`${isDarkMode ? 'text-white'
+                    : 'text-black'}`}
                 l>Inserisci Commento</Form.Label>
             <Form.Control
                 type="text"
@@ -93,9 +97,8 @@ const endPointPost = "https://striveschool-api.herokuapp.com/api/comments/"
                 className="mt-3"
                 type="submit"
                 variant="success"
-                
             >
-                Invia commento
+                {!isEditButton ?  "Invia commento " : "Modifica commento" }
             </Button>
         </Form>
     )

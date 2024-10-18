@@ -1,5 +1,5 @@
 import { Alert, ListGroup, Modal } from "react-bootstrap"
-import {useContext,useEffect} from "react"
+import {useContext,useEffect, useState} from "react"
 import CommentArea from "../CommentArea/CommentArea";
 import Button from 'react-bootstrap/Button';
 import { CommentAreaContext } from "../../contexts/CommenrtAreaContext";
@@ -17,9 +17,9 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
     
     const ENDPOINTDELETEPUTCOMMENT = `https://striveschool-api.herokuapp.com/api/comments/`
 
-    const { comments, setComments,isCommentError, setIsCommentError,isCommentLoading, setIsCommentLoading,render,setRender, toggleRender, setFormState,formState} = useContext(CommentAreaContext)
+    const { comments, setComments,isCommentError, setIsCommentError,isCommentLoading, setIsCommentLoading,render,setRender, toggleRender, setFormState,formState,onChangeEdit} = useContext(CommentAreaContext)
     
-    console.log(formState);
+    const [elementId, setElementId] =useState("")
         
 
     const getComment = async () => {
@@ -43,7 +43,8 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
             setIsCommentLoading(false)
         }
     }
-
+ 
+    console.log(comments);
     
 
     const deleteComment = async (elementId) => {
@@ -109,16 +110,10 @@ const AllComments = ({ isCommentsVisible, setIsCommentVisible, asin }) => {
             comment: comment.comment,
         
             id: comment._id,
-    })
+        })
+        setElementId(comment._id)
+        onChangeEdit(true)
 }
-   
-console.log(handleEditButton);
-
-
-
-
-
-
     return (
         <Modal
             show={isCommentsVisible}
@@ -175,9 +170,12 @@ console.log(handleEditButton);
                                 </div>
                             </ListGroup.Item>
                         </ListGroup>
-                    ))}
+                    ))
+                }
                 <CommentArea
                     asin={asin}
+                    putComment={putComment}
+                    elementId={elementId}
                     
                 />
 
