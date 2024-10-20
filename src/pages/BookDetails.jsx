@@ -21,7 +21,7 @@ const BookDetails = (asin) => {
     const { bookId } = useParams()
 
 
-    const selectedBook = books.find(book => book.asin === bookId)
+    const selectedBook = books.books.find(book => book.asin === bookId)
     console.log(selectedBook);
 
     
