@@ -25,7 +25,7 @@ const SingleBook = ({ img, title, price, category }) => {
                 <Card.Img role='img' variant="top" src={img} />
                 <Card.Title>{title}</Card.Title>
                 <Card.Text>{category}</Card.Text>
-                <Card.Text>{price}</Card.Text>
+                <Card.Text>{price.$numberDecimal}</Card.Text>
             </Card>
         </Col>
     )
