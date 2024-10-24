@@ -7,7 +7,7 @@ const
     NavLogo = () => {
     return (
         <div className="sizeCustom">
-            <Link to= '/'>
+            <Link to= '/home'>
                <img className=" h-100 rounded-5 " src={logo} alt="" role="img"/> 
             </Link>
             

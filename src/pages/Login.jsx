@@ -1,17 +1,20 @@
 import { useState } from "react"
-import { Button, Form } from "react-bootstrap"
+import { Button, Col, Container, Form, Row } from "react-bootstrap"
+import { useNavigate } from "react-router-dom";
 
 
 
 const Login = () => {
-    
+
     const [formLogin, setFormLogin] = useState({})
-    
-    const handleInputLogin = () => {
+    console.log(formLogin);
+    const navigate = useNavigate()
+
+    const handleInputLogin = (event) => {
         const { name, value } = event.target
         setFormLogin({
             ...formLogin,
-            [name] : value,
+            [name]: value,
         })
     }
 
@@ -23,47 +26,56 @@ const Login = () => {
                 headers: {
                     "Content-type": 'application/json'
                 },
-                body: JSON.stryngify(formLogin)
+                body: JSON.stringify(formLogin)
             })
+            console.log(response);
 
+            if (response.status === 200) {
+                navigate('/home')
+            }
             return await response.json()
-        } catch (error) {
             
+        } catch (error) {
+                console.log(error.message)
         }
     }
 
-    return(
-        <>
-            <Form onSubmit={onSubmitLogin}>
-                <Form.Group>
-                    <Form.Label>
-                        Email
-                    </Form.Label>
-                    <Form.Control
-                        type="email"
-                        placeholder="Inserisci la tua email"
-                        onChange={handleInputLogin}
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>
-                        Password
-                    </Form.Label>
-                    <Form.Control
-                        type="password"
-                        placeholder="Inserisci la tua password"
-                        onChange={handleInputLogin}
-                    />
-                </Form.Group>
-                <Button
-                    type="submit"
+    return (
+        <Container>
+            <Row
+                className=" d-flex justify-content-center align-items-center mt-5"
+            >
+                <Col
+                    sm={4}
                 >
-                    Invia
-                </Button>
-            </Form>
-          
-        
-        </>
+                    <Form onSubmit={onSubmitLogin}>
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Inserisci la mail"
+                            onChange={handleInputLogin}
+                        />
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Inserisci la password"
+                            onChange={handleInputLogin}
+                        />
+                           
+                        <button
+                            type="submit"
+                        >
+                            Invia
+                        </button>
+                    </Form>
+                </Col>
+            </Row>
+
+        </Container>
+
+
+
+
     )
 }
 
