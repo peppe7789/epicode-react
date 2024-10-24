@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Col, Row, Form } from "react-bootstrap"
 import { AllTheBooksContext } from "../../../contexts/AllTheBooksContext";
 
@@ -7,10 +7,9 @@ import { AllTheBooksContext } from "../../../contexts/AllTheBooksContext";
 const SearchBook = () => {
 
     const { books, setBooks } = useContext(AllTheBooksContext)
-    // stati
+    console.log(books);
 
     const [inputValue, setInputValue] = useState("")
-    console.log(books);
     console.log(inputValue);
 
     // hendler
@@ -20,17 +19,22 @@ const SearchBook = () => {
     }
 
 
-    // funzione per filtrare i valori
-    const filtredBooks = () => {
-        if (inputValue === "") {
-            setBooks(books)
-        } else {
-            const filtered = books.books.filter(book => {
-                return book.title.toLowerCase().includes(inputValue.toLowerCase())
-            })
-            setBooks(filtered)
+    const getSearchBook = async () => {
+        try {
+            if (inputValue === "") {
+                setBooks(books)
+            }
+
+            const response = await fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/books/bytitle/${inputValue}`)
+            
+            const result = await response.json()
+            console.log(result);
+            setBooks(result)
+        } catch (error) {
+            console.error(error.message)
         }
     }
+
 
 
 
@@ -44,7 +48,7 @@ const SearchBook = () => {
                 />
                 <button
                     className="btn btn-primary"
-                    onClick={filtredBooks}
+                    onClick={getSearchBook}
                 >
                     Cerca
                 </button>

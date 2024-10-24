@@ -10,13 +10,13 @@ const AllTheBooks = () => {
 
     const { books, page, setPage, pageSize, setPageSize } = useContext(AllTheBooksContext)
 
-    console.log(books);
+    console.log(books );
     console.log(page);
     return (
         <Container>
 
             <Row className="gy-4 d-flex gx mb-3">
-                {books &&
+                {books && 
                     books.books.map((book, idx) => (
                         <BookCard
                             key={`book-${idx}`}
@@ -33,8 +33,9 @@ const AllTheBooks = () => {
                     <Col>
                         <ResponsivePagination
                             current={page}
-                            total={books.totalPages}
+                            total={books && books.totalPages}
                             onPageChange={setPage}
+
 
                         />
                     </Col>

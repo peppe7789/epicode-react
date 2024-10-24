@@ -1,11 +1,9 @@
-
-
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import BookDetails from './pages/BookDetails';
+import Login from './pages/Login';
 
 
 
@@ -16,7 +14,8 @@ const App = () => {
 
     <BrowserRouter>
       <Routes>
-        <Route exact path='/' element={<HomePage />} />
+        <Route exact path='/' element={ <Login/>} />
+        <Route path='/' element={<HomePage />} />
         <Route path='/book-details/:bookId' element={<BookDetails />} />
         
         

@@ -6,12 +6,12 @@ export const AllTheBooksContext = createContext()
 export const AllTheBooksContextProvider = ({ children }) => {
 
     // Stati iniziali 
-    const [books, setBooks] = useState()
+    const [books, setBooks] = useState(null)
     // stato fisso per avere disponibili tutti i libri
-    // const [allBooks] = useState()
+    
     const [page, setPage] = useState(1)
     const [pageSize, setPageSize] = useState(12)
-console.log(page);
+
 
     const getBooks = async () => {
         
